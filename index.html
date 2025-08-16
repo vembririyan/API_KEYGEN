@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  body {
+    font-family: sans-serif;
+    text-align: center;
+    background: #f1f1f1;
+  }
+
+  .wrapper {
+    padding-top:60px;
+  }
+
+  .form-control {
+    background: #f7f7f7;
+    border-color: #ccc;
+    color: #555;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    height: 28px;
+    line-height: 26px;
+    margin: 0;
+    padding: 0 10px 1px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  input.form-control {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;
+    outline: 0 none;
+    margin: 1px;
+    padding: 3px 5px;
+    border-radius: 0;
+    font-size: 14px;
+    font-family: "Open Sans",sans-serif;
+    line-height: 1.4em;
+    width: 250px;
+  }
+
+  .input-group {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  #copybtn {
+    background: #4CAF50;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    margin-left: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  #copybtn:hover {
+    background: #45a049;
+  }
+</style>
+
+<body>
+    <div style="background-color: crimson;padding:5px;text-align: center;color:white;font-size: 16pt;">API KEY Generator</div>
+    <div class="wrapper">
+        <div class="form-control" id="keygen" style="background-color: crimson;color:white">Generate API Key</div>
+        
+        <div class="input-group">
+          <input class="form-control" id="apikey" type="text" value="" placeholder="Click on the button to generate a new API key ..." readonly />
+          <button id="copybtn">Copy</button>
+        </div>
+    </div>
+</body>
+<script>
+function generateUUID() {
+    var d = new Date().getTime();
+    if( window.performance && typeof window.performance.now === "function" ) {
+        d += performance.now();
+    }
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+}
+
+// Generate API Key
+$('#keygen').on('click', function() {
+    $('#apikey').val(generateUUID());
+});
+
+// Copy to clipboard
+$('#copybtn').on('click', function() {
+    var copyText = document.getElementById("apikey");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard.writeText(copyText.value);
+    alert("Copied: " + copyText.value);
+});
+</script>
+</html>
